@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #0c1018;
+    --bg-secondary: #121927;
+    --bg-tertiary: #182234;
+    --bg-elevated: #1c283d;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-default: rgba(255, 255, 255, 0.1);
+    --text-primary: #edf2fb;
+    --text-secondary: #a9b6cb;
+    --text-muted: #74839e;
+    --accent-gold: #f5b632;
+    --accent-emerald: #2fd8a0;
+  }
+
+  * {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  html {
+    font-size: 90%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: radial-gradient(1400px 560px at 10% -10%, #213356 0%, transparent 54%),
+      radial-gradient(1200px 460px at 95% 0%, #18364b 0%, transparent 56%), var(--bg-primary);
+    color: var(--text-primary);
+    font-family: "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+    line-height: 1.42;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(17, 23, 36, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .btn-gold {
+    @apply rounded-xl font-semibold transition-all duration-150;
+    background: linear-gradient(135deg, #f8c654 0%, #f0a626 100%);
+    color: #101722;
+    box-shadow: 0 8px 24px rgba(240, 166, 38, 0.25);
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(240, 166, 38, 0.36);
+  }
+
+  .btn-gold:disabled {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-ghost {
+    @apply rounded-xl border border-border-default bg-transparent text-text-secondary transition-all duration-150;
+  }
+
+  .btn-ghost:hover {
+    @apply border-border-strong text-text-primary;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .btn-danger {
+    @apply rounded-xl border border-red-500/35 bg-red-500/10 text-red-300 transition-colors;
+  }
+
+  .btn-danger:hover {
+    @apply bg-red-500/20 text-red-200;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[12px] font-medium text-text-secondary transition-all;
+  }
+
+  .sidebar-item:hover {
+    @apply text-text-primary;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .sidebar-item.active {
+    color: #f6c95f;
+    background: rgba(245, 182, 50, 0.12);
+    border: 1px solid rgba(245, 182, 50, 0.28);
+  }
+
+  .upload-zone {
+    @apply rounded-2xl border border-dashed border-border-default bg-bg-secondary/70 p-5 text-center transition-all;
+  }
+
+  .upload-zone:hover,
+  .upload-zone.drag-over {
+    border-color: rgba(245, 182, 50, 0.55);
+    background: rgba(245, 182, 50, 0.08);
+  }
+
+  .chat-user {
+    @apply rounded-2xl rounded-br-sm border border-gold-500/30 px-3.5 py-2.5 text-[13px] text-text-primary;
+    background: linear-gradient(135deg, rgba(245, 182, 50, 0.2), rgba(245, 182, 50, 0.08));
+    max-width: min(78ch, 86%);
+  }
+
+  .chat-ai {
+    @apply rounded-2xl rounded-tl-sm border border-border-default px-3.5 py-3 text-[13px] text-text-primary;
+    background: rgba(12, 18, 30, 0.72);
+    max-width: min(90ch, 95%);
+  }
+
+  .stage-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[10px] font-semibold text-indigo-300;
+  }
+
+  .thinking-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #f8c654;
+    animation: pulseDots 1.2s ease-in-out infinite;
+  }
+
+  .thinking-dot:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+
+  .thinking-dot:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-bg-elevated/80;
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    animation: shimmer 1.4s infinite;
+  }
+
+  .prose-legal {
+    @apply text-[13px] leading-relaxed text-text-primary;
+  }
+
+  .prose-legal p {
+    @apply mb-2.5;
+  }
+
+  .prose-legal h1,
+  .prose-legal h2,
+  .prose-legal h3 {
+    @apply mt-3.5 mb-2 font-semibold text-text-primary;
+  }
+
+  .prose-legal h1 {
+    @apply text-[1.15rem];
+  }
+
+  .prose-legal h2 {
+    @apply text-[1.05rem];
+  }
+
+  .prose-legal h3 {
+    @apply text-[0.98rem];
+  }
+
+  .prose-legal ul,
+  .prose-legal ol {
+    @apply mb-2.5 pl-5;
+  }
+
+  .prose-legal li {
+    @apply mb-1;
+  }
+
+  .prose-legal a {
+    @apply text-emerald-300 underline decoration-emerald-500/40 underline-offset-2;
+  }
+
+  .prose-legal blockquote {
+    @apply my-3 border-l-2 border-gold-500/50 pl-3 italic text-text-secondary;
+  }
+
+  .prose-legal code {
+    @apply rounded bg-bg-tertiary px-1.5 py-0.5 text-[12px] text-emerald-300;
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .prose-legal pre {
+    @apply my-3 overflow-x-auto rounded-xl border border-border-default bg-[#0f1624] p-3.5;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .prose-legal pre code {
+    @apply bg-transparent p-0 text-[#d9e6ff];
+  }
+
+  .prose-legal table {
+    @apply mb-3 w-full overflow-hidden rounded-lg border border-border-default;
+    border-collapse: collapse;
+  }
+
+  .prose-legal th {
+    @apply border-b border-border-default bg-bg-tertiary px-2.5 py-2 text-left text-[11px] text-gold-400;
+  }
+
+  .prose-legal td {
+    @apply border-b border-border-subtle px-2.5 py-2 text-[12px] text-text-secondary;
+  }
+
+  .sticky-input-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulseDots {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 88%;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 86%;
+  }
+}
